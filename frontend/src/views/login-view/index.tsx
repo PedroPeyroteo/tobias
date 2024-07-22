@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { login } from "../../services/authService";
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -7,6 +8,13 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    try {
+      await login(email, password);
+      navigate("/dashboard"); // Redirect to a protected route
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
+
     event.preventDefault();
     console.log({ username, password });
     navigate("/home"); // Replace with your home route
