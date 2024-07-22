@@ -1,7 +1,10 @@
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -10,13 +13,15 @@ async function bootstrap() {
     .setTitle('API Documentation')
     .setDescription('The API description')
     .setVersion('1.0')
-    .addTag('cats') // Optional: add tags for better organization
+    .addTag('tobias')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  const port = process.env.PORT || 3000;
+  app.useGlobalPipes(new ValidationPipe());
+
+  const port = process.env.PORT;
   await app.listen(port);
 
   const logger = new Logger('Bootstrap');
