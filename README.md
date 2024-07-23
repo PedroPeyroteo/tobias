@@ -7,3 +7,5 @@
 ## Description
 
 <b>Tobias</b> streamlines communication between waitstaff and kitchen staff on a local network. Using WebSockets for real-time updates, it integrates both frontend and backend in a single monorepo.
+
+Note: Still WIP
